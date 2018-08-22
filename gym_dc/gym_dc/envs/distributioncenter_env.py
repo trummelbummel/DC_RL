@@ -1,33 +1,3 @@
-"""
-distributioncenter environments have the following traits in common:
-- A demand and supply modeling , where the demand on the distribution center for different products is modeled , supply is always greater by a constant margin
-- A setup of the distribution center which can be set up by sampling operations according to a probability distribution whenever a demand can't be
-served by the current setup e.g. if there is too much demand on a product and the corresponding storage can't carry this amount of product
-- Agents effectively only take actions if the demand can't be served and control the setup of the distribution center
-- observation consists of a demand/supply/setup combination of the distribution center
-- there might be illegal states like a state minimum isle size upon which a new action is sampled instead
-
-
-Actions consist of 3 sub-actions:
-    - ID of the storage/buffer that is resized
-    - magnitude of change in size
-    - Whether to write to the output tape
-    - Which character to write (ignored if the above sub-action is 0)
-An episode ends when:
-    - The agent can serve the demand for an entire episode .
-    - The agent can't serve the demand anymore cause the supply is empty.
-    - The agent runs out the time limit. (Which is fairly conservative.)
-Reward schedule:
-# defined as a function of throughput speed
-    # high reward for
-In the beginning, demands will be small for the overall setup, after an environement has consistently served the demand
-over some episodes, the environment will increase the demand on the distribution center. Typically many times levelling up the demand will be necessary
-until the reward threshold is reached.
-Reward : we want to minimize the lift time and transport time. For that our objective function is defined as the negative transport and lift times for a certain demand and maximizing
-this quantity will minimize the lift and transport times.
-"""
-
-
 
 
 import numpy as np
