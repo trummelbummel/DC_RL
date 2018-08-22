@@ -6,9 +6,6 @@ from importlib import reload
 from gym import error, spaces, utils
 from gym.utils import seeding
 import os, subprocess, time, signal, logging
-from gym_dc.envs import DistributionCenter
-from gym_dc.envs import observation_space
-from gym_dc.envs import action_space
 from gym_dc.envs import demandmodel
 
 reload(demandmodel)
