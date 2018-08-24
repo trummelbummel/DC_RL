@@ -34,13 +34,13 @@ epsilon = 0.1
 statesize = env.observation_space.sample().shape[0]
 action_dimensions = env.action_space.sample().shape[0]
 learningrate = 0.001
-batch_size = 50
+batch_size = 32
 # q learning network from q_learning module
 agent = DeepQNetwork(env, learningrate, statesize, action_dimensions, gamma, epsilon, batch_size)
 
 
 # episode in this infinite MDP ends after a defined time step (see step function)
-for episode in range(1, 500):
+for episode in range(1, 100):
     done = False
     G, reward = 0,0
     # resets environment when done == True
@@ -52,11 +52,20 @@ for episode in range(1, 500):
         state = np.reshape(state, [1,state.shape[0]])
         action = agent.act(state)
         nextstate, reward, done, info = env.step(action)
-        # choose and action greedily from the q table
+        # remember previous state, action, reward and done
         agent.remember(state, action, reward, nextstate, done)
+
+
         state = nextstate
         G += reward
+        if len(agent.memory) > batch_size:
+            agent.replay(batch_size)
+    # fits NN to memory
+    # before training
+    agent.get_stats_training()
 
+    # after training see if change for testing
+    agent.get_stats_training()
     print('Episode {} Total Reward: {}'.format(episode, G))
 
     #agent.replay(32)
